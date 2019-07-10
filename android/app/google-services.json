@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "177823051907",
+    "firebase_url": "https://ungtpa.firebaseio.com",
+    "project_id": "ungtpa",
+    "storage_bucket": "ungtpa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:177823051907:android:40dd9154762a355f",
+        "android_client_info": {
+          "package_name": "th.in.androidthai.ung_tpa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "177823051907-kglemuhi0dpjilb4dnd7pk0v65s2ki0v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCz61CPSByyD13qdTWpKLG-HbcO-pn8uDM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "177823051907-kglemuhi0dpjilb4dnd7pk0v65s2ki0v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
