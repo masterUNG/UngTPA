@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -9,6 +10,7 @@ class _RegisterState extends State<Register> {
   // Explicit
   final formKey = GlobalKey<FormState>();
   String nameString, emailString, passwordString;
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   // Method
   Widget uploadButton() {
@@ -18,8 +20,45 @@ class _RegisterState extends State<Register> {
         print('Click Upload');
         if (formKey.currentState.validate()) {
           formKey.currentState.save();
-          print('Name = $nameString, Email = $emailString, Password = $passwordString');
+          print(
+              'Name = $nameString, Email = $emailString, Password = $passwordString');
+          registerFirebase();
         }
+      },
+    );
+  }
+
+  Future<void> registerFirebase() async {
+    await firebaseAuth
+        .createUserWithEmailAndPassword(
+            email: emailString, password: passwordString)
+        .then((response) {
+      print('Register Success');
+    }).catchError((response) {
+      print('Error = ${response.toString()}');
+
+      String title = response.code;
+      String message = response.message;
+      myAlert(title, message);
+    });
+  }
+
+  void myAlert(String titleString, String messageString) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(titleString, style: TextStyle(color: Colors.red),),
+          content: Text(messageString),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
       },
     );
   }
@@ -44,11 +83,13 @@ class _RegisterState extends State<Register> {
           size: 36.0,
           color: Colors.blue,
         ),
-      ),validator: (String value){
+      ),
+      validator: (String value) {
         if (value.isEmpty) {
           return 'Please Fill Name in Blank';
         }
-      },onSaved: (String value){
+      },
+      onSaved: (String value) {
         nameString = value;
       },
     );
@@ -75,11 +116,13 @@ class _RegisterState extends State<Register> {
           size: 36.0,
           color: Colors.green,
         ),
-      ),validator: (String value){
+      ),
+      validator: (String value) {
         if (!((value.contains('@')) && (value.contains('.')))) {
           return 'Email Format False';
         }
-      },onSaved: (String value){
+      },
+      onSaved: (String value) {
         emailString = value;
       },
     );
@@ -105,11 +148,13 @@ class _RegisterState extends State<Register> {
           size: 36.0,
           color: Colors.orangeAccent,
         ),
-      ),validator: (String value){
+      ),
+      validator: (String value) {
         if (value.length <= 5) {
           return 'Password False';
         }
-      },onSaved: (String value){
+      },
+      onSaved: (String value) {
         passwordString = value;
       },
     );
