@@ -11,8 +11,47 @@ class MyService extends StatefulWidget {
 class _MyServiceState extends State<MyService> {
   // Explicit
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  String nameString = '';
 
   // Method
+  Widget showTitleAppBar() {
+    return Container(
+      alignment: Alignment.topLeft,
+      child: Column(
+        children: <Widget>[
+          Container(
+            alignment: Alignment.topLeft,
+            child: Text('My Service'),
+          ),
+          Container(
+            alignment: Alignment.topLeft,
+            child: Text(
+              'Login by $nameString',
+              style: TextStyle(
+                fontSize: 14.0,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    findName();
+  }
+
+  Future<void> findName() async {
+    FirebaseUser firebaseUser = await firebaseAuth.currentUser();
+    setState(() {
+      nameString = firebaseUser.displayName;
+    });
+    print('name = $nameString');
+  }
+
   Future<void> signOutAndExit() async {
     await firebaseAuth.signOut().then((response) {
       exit(0);
@@ -73,8 +112,8 @@ class _MyServiceState extends State<MyService> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('My Service'),
+      appBar: AppBar(backgroundColor: Colors.orange[900],
+        title: showTitleAppBar(),
       ),
       body: Text('body'),
       drawer: myDrawerMenu(),
