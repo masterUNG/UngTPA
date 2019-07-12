@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ung_tpa/screens/show_list_video.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 
 class MyService extends StatefulWidget {
   @override
@@ -59,6 +60,20 @@ class _MyServiceState extends State<MyService> {
     });
   }
 
+  Future<void> readQRcode()async{
+
+    try {
+      String qrCodeString = await BarcodeScanner.scan();
+
+      if (qrCodeString.length != 0) {
+        print('QRcode ==> $qrCodeString');
+      }
+      
+    } catch (e) {
+    }
+
+  }
+
   Widget showAppName() {
     return Text(
       'Ung TPA',
@@ -101,6 +116,7 @@ class _MyServiceState extends State<MyService> {
               style: TextStyle(fontSize: 18.0),
             ),onTap: (){
               print('Click QR code');
+              readQRcode();
             },
           ),
           ListTile(
