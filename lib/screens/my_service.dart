@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ung_tpa/screens/show_list_video.dart';
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:ung_tpa/screens/show_map.dart';
 
 class MyService extends StatefulWidget {
   @override
@@ -60,18 +61,14 @@ class _MyServiceState extends State<MyService> {
     });
   }
 
-  Future<void> readQRcode()async{
-
+  Future<void> readQRcode() async {
     try {
       String qrCodeString = await BarcodeScanner.scan();
 
       if (qrCodeString.length != 0) {
         print('QRcode ==> $qrCodeString');
       }
-      
-    } catch (e) {
-    }
-
+    } catch (e) {}
   }
 
   Widget showAppName() {
@@ -108,13 +105,29 @@ class _MyServiceState extends State<MyService> {
           ),
           ListTile(
             leading: Icon(
+              Icons.map,
+              size: 36.0,
+            ),
+            title: Text(
+              'Show Map',
+              style: TextStyle(fontSize: 18.0),
+            ),
+            onTap: () {
+              var showMapRoute = MaterialPageRoute(
+                  builder: (BuildContext context) => ShowMap());
+                  Navigator.of(context).push(showMapRoute);
+            },
+          ),
+          ListTile(
+            leading: Icon(
               Icons.android,
               size: 36.0,
             ),
             title: Text(
               'QR code',
               style: TextStyle(fontSize: 18.0),
-            ),onTap: (){
+            ),
+            onTap: () {
               print('Click QR code');
               readQRcode();
             },

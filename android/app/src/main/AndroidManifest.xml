@@ -3,11 +3,17 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="Ung TPA"
         android:icon="@mipmap/ic_launcher">
+
+    <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyDWc3wCE-qarz4b5kTUsckUURP0RaTRbJU"/>
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -22,6 +28,7 @@
             <meta-data
                 android:name="io.flutter.app.android.SplashScreenUntilFirstFrame"
                 android:value="true" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
