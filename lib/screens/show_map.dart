@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:location/location.dart';
 
 class ShowMap extends StatefulWidget {
   @override
@@ -12,6 +13,26 @@ class _ShowMapState extends State<ShowMap> {
     target: centerMap,
     zoom: 16.0,
   );
+
+  @override
+  void initState() { 
+    super.initState();
+    // findLocation();
+  }
+
+  // Future<void> findLocation()async{
+
+  //   var location = Location();
+
+  //   Map<String, dynamic> userLocation;
+
+  //   userLocation = (await location.getLocation()) as Map<String, dynamic>;
+
+  //   double latDou = userLocation['latitude'];
+
+  //   print('latDou = $latDou');
+
+  // }
 
   Widget myMap() {
     return GoogleMap(
