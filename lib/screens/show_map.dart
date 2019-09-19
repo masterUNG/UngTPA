@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-// import 'package:location/location.dart';
+import 'package:location/location.dart';
 
 class ShowMap extends StatefulWidget {
   @override
@@ -14,28 +15,36 @@ class _ShowMapState extends State<ShowMap> {
     zoom: 16.0,
   );
 
+  LocationData currentLocation;
+
   @override
-  void initState() { 
+  void initState() {
     super.initState();
-    // findLocation();
+    findLocation();
   }
 
-  // Future<void> findLocation()async{
+  Future<LocationData> locationData() async {
+    var location = Location();
 
-  //   var location = Location();
+    try {
+      return await location.getLocation();
+    } on PlatformException catch (e) {
+      if (e.code == 'PERMISSION_DENIED') {
+        print('Premission Denied');
+      }
+      return null;
+    }
+  }
 
-  //   Map<String, dynamic> userLocation;
-
-  //   userLocation = (await location.getLocation()) as Map<String, dynamic>;
-
-  //   double latDou = userLocation['latitude'];
-
-  //   print('latDou = $latDou');
-
-  // }
+  Future<void> findLocation() async {
+    currentLocation = await locationData();
+    print(
+        'Lat = ${currentLocation.latitude}, Lng = ${currentLocation.longitude}');
+  }
 
   Widget myMap() {
     return GoogleMap(
+      myLocationEnabled: true,
       mapType: MapType.normal,
       initialCameraPosition: cameraPosition,
       onMapCreated: (GoogleMapController googleMapController) {},
@@ -56,6 +65,7 @@ class _ShowMapState extends State<ShowMap> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.orange[900],
         title: Text('Map'),
       ),
       body: myMap(),
